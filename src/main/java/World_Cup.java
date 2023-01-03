@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Wprld_Cup
  */
-public class World_Cup {
+public final class World_Cup {
 
     public static int alpha(int[] keys) {
         if (keys.length == 0) {
@@ -29,9 +29,9 @@ public class World_Cup {
             oddMinusNextEven[i >> 1] = difference; // using shift operator to divide by 2 to improve performance
         }
         // display(oddMinusNextEven);
-        long incrementationOddMinusPrevEven = getIncrementation(oddMinusPrevEven);
-        long incrementationOddMinusNextEven = getIncrementation(oddMinusNextEven);
-        return sumOfElementsInEven + (int) max(0, incrementationOddMinusNextEven, incrementationOddMinusPrevEven);
+        int incrementationOddMinusPrevEven = getIncrementation(oddMinusPrevEven);
+        int incrementationOddMinusNextEven = getIncrementation(oddMinusNextEven);
+        return sumOfElementsInEven + max(0, incrementationOddMinusNextEven, incrementationOddMinusPrevEven);
     }
 
     public static int[] alphaRec(int[] keys) {
@@ -151,10 +151,10 @@ public class World_Cup {
         }
     }
 
-    private static long getIncrementation(int[] array) {
-        long max1 = (int) Double.NEGATIVE_INFINITY;
-        long max2 = (int) Double.NEGATIVE_INFINITY;
-        for (int i = 0; i < array.length; i++) {
+    private static int getIncrementation(int[] array) {
+        int max1 = array[0];
+        int max2 = array[0];
+        for (int i = 1; i < array.length; i++) {
             max1 = max(max1 + array[i], array[i]);
             max2 = max(max1, max2);
             // System.out.println(max2);
@@ -162,11 +162,11 @@ public class World_Cup {
         return max2;
     }
 
-    public static long max(long x, long y) {
+    public static int max(int x, int y) {
         return (x > y) ? x : y;
     }
 
-    public static long max(long x, long y, long z) {
+    public static int max(int x, int y, int z) {
         return max(max(x, y), z);
     }
 
