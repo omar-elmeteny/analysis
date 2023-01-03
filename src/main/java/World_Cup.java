@@ -17,20 +17,25 @@ public final class World_Cup {
                 sumOfElementsInEven = sumOfElementsInEven + keys[i];
             }
         }
-        int[] oddMinusPrevEven = new int[keys.length / 2];
-        int[] oddMinusNextEven = new int[(keys.length - 1) / 2];
+        int incrementationOddMinusPrevEven = Integer.MIN_VALUE;
+        int max1 = Integer.MIN_VALUE;
         for (int i = 0; i < keys.length - 1; i += 2) {
             int difference = keys[i + 1] - keys[i];
-            oddMinusPrevEven[i >> 1] = difference; // using shift operator to divide by 2 to improve performance
-        }
-        // display(oddMinusPrevEven);
-        for (int i = 1; i < keys.length - 1; i += 2) {
-            int difference = keys[i] - keys[i + 1];
-            oddMinusNextEven[i >> 1] = difference; // using shift operator to divide by 2 to improve performance
+            max1 = max1 > 0 ? max1 + difference : difference;
+            if (incrementationOddMinusPrevEven < max1) {
+                incrementationOddMinusPrevEven = max1;
+            }
         }
         // display(oddMinusNextEven);
-        int incrementationOddMinusPrevEven = getIncrementation(oddMinusPrevEven);
-        int incrementationOddMinusNextEven = getIncrementation(oddMinusNextEven);
+        int incrementationOddMinusNextEven = Integer.MIN_VALUE;
+        max1 = Integer.MIN_VALUE;
+        for (int i = 1; i < keys.length - 1; i += 2) {
+            int difference = keys[i] - keys[i + 1];
+            max1 = max1 > 0 ? max1 + difference : difference;
+            if (incrementationOddMinusNextEven < max1) {
+                incrementationOddMinusNextEven = max1;
+            }
+        }
         return sumOfElementsInEven + max(0, incrementationOddMinusNextEven, incrementationOddMinusPrevEven);
     }
 
@@ -149,17 +154,6 @@ public final class World_Cup {
         } else {
             return range3;
         }
-    }
-
-    private static int getIncrementation(int[] array) {
-        int max1 = array[0];
-        int max2 = array[0];
-        for (int i = 1; i < array.length; i++) {
-            max1 = max(max1 + array[i], array[i]);
-            max2 = max(max1, max2);
-            // System.out.println(max2);
-        }
-        return max2;
     }
 
     public static int max(int x, int y) {
